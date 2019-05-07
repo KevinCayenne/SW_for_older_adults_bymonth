@@ -45,6 +45,10 @@ normal_neat_older_adult_activity[normal_neat_older_adult_activity$主類型 == "" &
 admin.normal_neat_older_adult_activity <- as.data.frame(table(normal_neat_older_adult_activity$行政區))
 
 map.f.uni_normal_neat_older_adult_activity <- unique(normal_neat_older_adult_activity[,c(1,4,5,9,10,16)])
+admin.map.f.uni_normal_neat_older_adult_activity <- unique(normal_neat_older_adult_activity[,c(9,10)])
+
+admin.map.f.uni_normal_neat_older_adult_activity.df <- as.data.frame(table(admin.map.f.uni_normal_neat_older_adult_activity$行政區), stringsAsFactors=FALSE)
+colnames(admin.map.f.uni_normal_neat_older_adult_activity.df) <- c("行政區", "據點數")
 
 admin.uni.normal_neat_older_adult_activity <- as.data.frame(table(map.f.uni_normal_neat_older_adult_activity$行政區))
 
@@ -53,7 +57,7 @@ admin.normal_neat_older_adult_activity <- cbind(admin.normal_neat_older_adult_ac
 
 colnames(admin.normal_neat_older_adult_activity) <- c("行政區", "人次", "人數")
 
-write.csv(admin.normal_neat_older_adult_activity, "Third_graph.csv")
+
 
 #### Third graph (按照據點流水號)####
 
@@ -70,5 +74,9 @@ admin.normal_neat_older_adult_activity.by_id <- cbind(admin.normal_neat_older_ad
 
 colnames(admin.normal_neat_older_adult_activity.by_id)[1:2] <- c("據點流水號", "人次")
 
-write.csv(admin.normal_neat_older_adult_activity.by_id, "Third_graph_org.csv")
-  
+write.csv(admin.normal_neat_older_adult_activity.by_id, "Third_graph_org.csv", row.names = FALSE)
+
+admin.normal_neat_older_adult_activity <- cbind(admin.normal_neat_older_adult_activity,
+                                                "據點數" = admin.map.f.uni_normal_neat_older_adult_activity.df$據點數)
+
+write.csv(admin.normal_neat_older_adult_activity, "Third_graph.csv", row.names = FALSE)

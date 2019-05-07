@@ -38,11 +38,11 @@ neat_older_adult_activity <- cbind(neat_older_adult_activity, older_age)
 
 normal_neat_older_adult_activity <- neat_older_adult_activity[neat_older_adult_activity$older_age >= 20,]
 
-#### unique subjects 
+#### normal unique subjects ####
 
 f.uni_normal_neat_older_adult_activity <- unique(normal_neat_older_adult_activity[,c(1,4,5,16)])
 
-table(f.uni_normal_neat_older_adult_activity$older_age, f.uni_normal_neat_older_adult_activity$性別)
+#table(f.uni_normal_neat_older_adult_activity$older_age, f.uni_normal_neat_older_adult_activity$性別)
 
 f.uni_normal_neat_older_adult_activity.M <- f.uni_normal_neat_older_adult_activity[f.uni_normal_neat_older_adult_activity$性別 == "M",]
 f.uni_normal_neat_older_adult_activity.F <- f.uni_normal_neat_older_adult_activity[f.uni_normal_neat_older_adult_activity$性別 == "F",]
@@ -51,6 +51,23 @@ f.uni_normal_neat_older_adult_activity.NA <- f.uni_normal_neat_older_adult_activ
 hf.uni_normal_neat_older_adult_activity.M <- hist(f.uni_normal_neat_older_adult_activity.M$older_age, breaks = 15)
 hf.uni_normal_neat_older_adult_activity.F <- hist(f.uni_normal_neat_older_adult_activity.F$older_age, breaks = 15)
 hf.uni_normal_neat_older_adult_activity.NA <- hist(f.uni_normal_neat_older_adult_activity.NA$older_age, breaks = 15)
+
+##### abnormal data ####
+
+outdata.normal_neat_older_adult_activity <- neat_older_adult_activity[neat_older_adult_activity$older_age < 20,]
+f.outdata.normal_neat_older_adult_activity <- unique(outdata.normal_neat_older_adult_activity[,c(1,4,5,16)])
+
+f.outdata.normal_neat_older_adult_activity.M <- f.outdata.normal_neat_older_adult_activity[f.outdata.normal_neat_older_adult_activity$性別 == "M",]
+f.outdata.normal_neat_older_adult_activity.F <- f.outdata.normal_neat_older_adult_activity[f.outdata.normal_neat_older_adult_activity$性別 == "F",]
+f.outdata.normal_neat_older_adult_activity.NA <- f.outdata.normal_neat_older_adult_activity[f.outdata.normal_neat_older_adult_activity$性別 == "",]
+
+f.outdata.normal_neat_older_adult_activity.col <- c("不在分析範圍的值",
+                                                    nrow(f.outdata.normal_neat_older_adult_activity.M),
+                                                    nrow(f.outdata.normal_neat_older_adult_activity.F),
+                                                    nrow(f.outdata.normal_neat_older_adult_activity.NA),
+                                                    nrow(f.outdata.normal_neat_older_adult_activity.M) + nrow(f.outdata.normal_neat_older_adult_activity.F) + nrow(f.outdata.normal_neat_older_adult_activity.NA))
+
+####
 
 lengths = max(length(hf.uni_normal_neat_older_adult_activity.M$counts),
               length(hf.uni_normal_neat_older_adult_activity.F$counts),
@@ -68,11 +85,11 @@ hf.uni_normal_neat_older_adult_activity.gender <- cbind(hf.uni_normal_neat_older
 hf.uni_normal_neat_older_adult_activity.gender[is.na(hf.uni_normal_neat_older_adult_activity.gender)] = 0
 
 年齡間距 <- c("20-25","26-30","31-35",
-          "36-40","41-45","46-50","51-55","56-60","61-65","66-70",
-          "71-75","76-80","81-85","85-90","91-95","96-100","101-105",
-          "106-110","111-115","116-120")
+              "36-40","41-45","46-50","51-55","56-60","61-65","66-70",
+              "71-75","76-80","81-85","85-90","91-95","96-100","101-105",
+              "106-110","111-115","116-120")
 
-hf.uni_normal_neat_older_adult_activity.gender.df <- as.data.frame(hf.uni_normal_neat_older_adult_activity.gender)
+hf.uni_normal_neat_older_adult_activity.gender.df <- as.data.frame(hf.uni_normal_neat_older_adult_activity.gender, stringsAsFactors=FALSE)
 hf.uni_normal_neat_older_adult_activity.gender.df <- hf.uni_normal_neat_older_adult_activity.gender.df[-c(21),]
 hf.uni_normal_neat_older_adult_activity.gender.df <- cbind(年齡間距, hf.uni_normal_neat_older_adult_activity.gender.df)
 hf.uni_normal_neat_older_adult_activity.gender.df <- hf.uni_normal_neat_older_adult_activity.gender.df[,-c(2)]
@@ -93,14 +110,22 @@ for(i in 2:5){
 
 Total <- c("Total", Total)
 
-fhf.uni_nomral_neat_older_adult_activity.gender.df <- rbind(fhf.uni_normal_neat_older_adult_activity.gender.df, Total)
+fhf.uni_normal_neat_older_adult_activity.gender.df$年齡間距 <- as.character(fhf.uni_normal_neat_older_adult_activity.gender.df$年齡間距)
 
-write.csv(fhf.uni_nomral_neat_older_adult_activity.gender.df, "first_gragh.csv")
+fhf.uni_nomral_neat_older_adult_activity.gender.df <- rbind(fhf.uni_normal_neat_older_adult_activity.gender.df, 
+                                                            Total,
+                                                            f.outdata.normal_neat_older_adult_activity.col)
 
+write.csv(fhf.uni_nomral_neat_older_adult_activity.gender.df, "first_gragh.csv", row.names = FALSE)
 
+##### >= 60 gender 
 
+oversixty_normal_neat_older_adult_activity <- neat_older_adult_activity[neat_older_adult_activity$older_age >= 60,]
+f.oversixty_normal_neat_older_adult_activity <- unique(oversixty_normal_neat_older_adult_activity[,c(1,4,5,16)])
 
+f.oversixty_normal_neat_older_adult_activity.df <- as.data.frame(table(f.oversixty_normal_neat_older_adult_activity$性別), stringsAsFactors=FALSE)
 
+colnames(f.oversixty_normal_neat_older_adult_activity.df) <- c("性別", "人數")
+f.oversixty_normal_neat_older_adult_activity.df$性別 <- c("無", "女", "男")
 
-
-
+write.csv(f.oversixty_normal_neat_older_adult_activity.df, "gender_over60.csv", row.names = FALSE)
