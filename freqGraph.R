@@ -12,6 +12,7 @@ library(devtools)
 library(mni2aal)
 library(lubridate)
 library(stringr)
+library(rio)
 
 calc_age <- function(birthDate, refDate = Sys.Date()) {
   
@@ -43,18 +44,26 @@ freq.f.uni_normal_neat_older_adult_activity <- normal_neat_older_adult_activity[
 date.freq.f.uni_normal_neat_older_adult_activity <- separate(freq.f.uni_normal_neat_older_adult_activity, "簽到時間", into = c("日期", "時間"), sep = " ")
 date.freq.f.uni_normal_neat_older_adult_activity <- separate(date.freq.f.uni_normal_neat_older_adult_activity, "日期", into = c("年", "月", "日"), sep = "/")
 
-nui.date.freq.f.uni_normal_neat_older_adult_activity <- unique(date.freq.f.uni_normal_neat_older_adult_activity[,c(1,4,6,7,8,9)])
+uni.date.freq.f.uni_normal_neat_older_adult_activity <- unique(date.freq.f.uni_normal_neat_older_adult_activity[,c(1,4,6,7,8,9)])
 
-for(i in levels(freq.f.uni_normal_neat_older_adult_activity$行政區)){
+table(uni.date.freq.f.uni_normal_neat_older_adult_activity$長者流水號)
 
- sum.people <- nrow(freq.f.uni_normal_neat_older_adult_activity[freq.f.uni_normal_neat_older_adult_activity$行政區 == i,])
- num.people <- as.data.frame(table(freq.f.uni_normal_neat_older_adult_activity[freq.f.uni_normal_neat_older_adult_activity$行政區 == i,]$長者流水號))
- 
- 
- hist.num.people <- hist(num.people$Freq/4, breaks = 35)
- hist.num.people$counts
- hist.num.people$breaks
+admin.people.df <- data.frame()
+for(i in levels(uni.date.freq.f.uni_normal_neat_older_adult_activity$行政區)){
+  
+   uni.date.freq.f.uni_normal_neat_older_adult_activity.df <- as.data.frame(table(uni.date.freq.f.uni_normal_neat_older_adult_activity[uni.date.freq.f.uni_normal_neat_older_adult_activity$行政區 == i,]$長者流水號))
+   uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist <- hist(uni.date.freq.f.uni_normal_neat_older_adult_activity.df$Freq/4, breaks = 6)
+   
+   if (length(uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts) > 6){
+    new.counts <- c(uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts[1:5], uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts[6] + uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts[7])
+   } 
+   
+   temp.admin <- data.frame(一周平均刷卡天數 = c("1天或小於一天", "2", "3", "4", "5", "6天以上"),
+                            人數 = new.counts, 
+                            行政區 = rep(i, length(new.counts)))
+   
+   admin.people.df <- rbind(admin.people.df, temp.admin)
 }
- 
-
-as.data.frame(table(freq.f.uni_normal_neat_older_adult_activity[freq.f.uni_normal_neat_older_adult_activity$行政區 == "士林區",]$長者流水號))
+   
+export(admin.people.df, "freqGraph.xlsx")
+  
