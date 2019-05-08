@@ -27,7 +27,6 @@ setwd("D:/Data/仕緯專案")
 older_adult_activity <- read.csv("2019 年 3 月長者簽到資料.csv")
 neat_older_adult_activity <- older_adult_activity[older_adult_activity$姓名 != "" & older_adult_activity$生日 != "",]
 
-
 ##### First graph (density of participants by age ranges) ####
 
 older_birth <- as.Date(neat_older_adult_activity$生日)
