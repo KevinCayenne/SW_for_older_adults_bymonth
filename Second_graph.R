@@ -11,6 +11,7 @@ library(data.table)
 library(devtools)
 library(mni2aal)
 library(lubridate)
+library(rio)
 
 calc_age <- function(birthDate, refDate = Sys.Date()) {
   
@@ -67,4 +68,4 @@ act.freq.table <- cbind(act.freq.table, 计 = norepo.act.freq.table$计)
 act.freq.table <- cbind(act.freq.table, キАㄏノΩ计 = act.freq.table$Ω/act.freq.table$计)
 
 write.csv(act.freq.table, "second_graph.csv", row.names = FALSE)
-
+export(admin.people.df, "second_graph.xlsx")

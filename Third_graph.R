@@ -11,6 +11,7 @@ library(data.table)
 library(devtools)
 library(mni2aal)
 library(lubridate)
+library(rio)
 
 calc_age <- function(birthDate, refDate = Sys.Date()) {
   
@@ -57,8 +58,6 @@ admin.normal_neat_older_adult_activity <- cbind(admin.normal_neat_older_adult_ac
 
 colnames(admin.normal_neat_older_adult_activity) <- c("行政區", "人次", "人數")
 
-
-
 #### Third graph (按照據點流水號)####
 
 org_list <- read.csv("108年度據點列表.csv")
@@ -80,3 +79,4 @@ admin.normal_neat_older_adult_activity <- cbind(admin.normal_neat_older_adult_ac
                                                 "據點數" = admin.map.f.uni_normal_neat_older_adult_activity.df$據點數)
 
 write.csv(admin.normal_neat_older_adult_activity, "Third_graph.csv", row.names = FALSE)
+export(admin.people.df, "Third_graph.xlsx")

@@ -11,6 +11,7 @@ library(data.table)
 library(devtools)
 library(mni2aal)
 library(lubridate)
+library(rio)
 
 calc_age <- function(birthDate, refDate = Sys.Date()) {
   
@@ -116,6 +117,7 @@ fhf.uni_nomral_neat_older_adult_activity.gender.df <- rbind(fhf.uni_normal_neat_
                                                             f.outdata.normal_neat_older_adult_activity.col)
 
 write.csv(fhf.uni_nomral_neat_older_adult_activity.gender.df, "first_gragh.csv", row.names = FALSE)
+export(admin.people.df, "first_gragh.xlsx")
 
 ##### >= 60 gender 
 
@@ -128,3 +130,4 @@ colnames(f.oversixty_normal_neat_older_adult_activity.df) <- c("性別", "人數")
 f.oversixty_normal_neat_older_adult_activity.df$性別 <- c("無", "女", "男")
 
 write.csv(f.oversixty_normal_neat_older_adult_activity.df, "gender_over60.csv", row.names = FALSE)
+export(admin.people.df, "gender_over60.xlsx")

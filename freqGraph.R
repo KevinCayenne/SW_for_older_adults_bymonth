@@ -46,7 +46,11 @@ date.freq.f.uni_normal_neat_older_adult_activity <- separate(date.freq.f.uni_nor
 
 uni.date.freq.f.uni_normal_neat_older_adult_activity <- unique(date.freq.f.uni_normal_neat_older_adult_activity[,c(1,4,6,7,8,9)])
 
-table(uni.date.freq.f.uni_normal_neat_older_adult_activity$長者流水號)
+norep.uni.date.freq.f.uni_normal_neat_older_adult_activity <- unique(date.freq.f.uni_normal_neat_older_adult_activity[,c(1,4,6,7),])
+
+all.hist.uni.date.freq.f.uni_normal_neat_older_adult_activity <- hist(table(norep.uni.date.freq.f.uni_normal_neat_older_adult_activity$長者流水號)/4, breaks = 6)
+
+all.hist.uni.date.freq.f.uni_normal_neat_older_adult_activity$counts
 
 admin.people.df <- data.frame()
 for(i in levels(uni.date.freq.f.uni_normal_neat_older_adult_activity$行政區)){
