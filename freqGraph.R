@@ -52,15 +52,16 @@ admin.people.df <- data.frame()
 for(i in levels(uni.date.freq.f.uni_normal_neat_older_adult_activity$行政區)){
   
    uni.date.freq.f.uni_normal_neat_older_adult_activity.df <- as.data.frame(table(uni.date.freq.f.uni_normal_neat_older_adult_activity[uni.date.freq.f.uni_normal_neat_older_adult_activity$行政區 == i,]$長者流水號))
+   
    uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist <- hist(uni.date.freq.f.uni_normal_neat_older_adult_activity.df$Freq/4, breaks = 6)
-   
-   if (length(uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts) > 6){
-    new.counts <- c(uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts[1:5], uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts[6] + uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts[7])
-   } 
-   
-   temp.admin <- data.frame(一周平均刷卡天數 = c("1天或小於一天", "2", "3", "4", "5", "6天以上"),
-                            人數 = new.counts, 
-                            行政區 = rep(i, length(new.counts)))
+   # 
+   # if (length(uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts) > 6){
+   #  new.counts <- c(uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts[1:5], uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts[6] + uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts[7])
+   # } 
+   # 
+   temp.admin <- data.frame(一周平均刷卡天數 = 1:length(uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts),
+                            人數 = uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts, 
+                            行政區 = rep(i, length(uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts)))
    
    admin.people.df <- rbind(admin.people.df, temp.admin)
 }
