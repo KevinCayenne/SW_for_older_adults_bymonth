@@ -22,7 +22,8 @@ calc_age <- function(birthDate, refDate = Sys.Date()) {
 
 setwd("D:/Data/SWC")
 
-older_adult_activity <- read.csv("2019 年 3 月長者簽到資料.csv")
+older_adult_activity <- read.csv("2019 年 3 月長者簽到資料.csv") # 設定讀入檔案
+
 neat_older_adult_activity <- older_adult_activity[older_adult_activity$姓名 != "" & older_adult_activity$生日 != "",]
 
 ##### Preprocessing ####
@@ -73,8 +74,8 @@ admin.normal_neat_older_adult_activity <- cbind(admin.normal_neat_older_adult_ac
                                                 "據點數" = admin.map.f.uni_normal_neat_older_adult_activity.df$據點數)
 
 # export csv and and xlsx
-write.csv(admin.normal_neat_older_adult_activity.by_id, "Third_graph_org.csv", row.names = FALSE)
+# write.csv(admin.normal_neat_older_adult_activity.by_id, "Third_graph_org.csv", row.names = FALSE)
 export(admin.people.df, "Third_graph_org.xlsx")
 
-write.csv(admin.normal_neat_older_adult_activity, "Third_graph.csv", row.names = FALSE)
+# write.csv(admin.normal_neat_older_adult_activity, "Third_graph.csv", row.names = FALSE)
 export(admin.people.df, "Third_graph.xlsx")

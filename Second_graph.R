@@ -22,9 +22,9 @@ calc_age <- function(birthDate, refDate = Sys.Date()) {
 
 setwd("D:/Data/SWC")
 
-older_adult_activity <- read.csv("2019 年 3 月長者簽到資料.csv")
-neat_older_adult_activity <- older_adult_activity[older_adult_activity$姓名 != "" & older_adult_activity$生日 != "",]
+older_adult_activity <- read.csv("2019 年 3 月長者簽到資料.csv") # 設定讀入檔案
 
+neat_older_adult_activity <- older_adult_activity[older_adult_activity$姓名 != "" & older_adult_activity$生日 != "",]
 
 ##### Preprocessing ####
 
@@ -64,5 +64,5 @@ act.freq.table <- cbind(act.freq.table, 人數 = norepo.act.freq.table$人數)
 
 act.freq.table <- cbind(act.freq.table, 平均使用次數 = act.freq.table$人次/act.freq.table$人數)
 
-write.csv(act.freq.table, "second_graph.csv", row.names = FALSE)
+# write.csv(act.freq.table, "second_graph.csv", row.names = FALSE)
 export(admin.people.df, "second_graph.xlsx")

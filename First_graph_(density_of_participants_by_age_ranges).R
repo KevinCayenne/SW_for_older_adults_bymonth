@@ -22,7 +22,8 @@ calc_age <- function(birthDate, refDate = Sys.Date()) {
 
 setwd("D:/Data/SWC")
 
-older_adult_activity <- read.csv("2019 年 3 月長者簽到資料.csv")
+older_adult_activity <- read.csv("2019 年 3 月長者簽到資料.csv") # 設定讀入檔案
+
 neat_older_adult_activity <- older_adult_activity[older_adult_activity$姓名 != "" & older_adult_activity$生日 != "",]
 
 ##### First graph (density of participants by age ranges) ####
@@ -113,9 +114,6 @@ fhf.uni_nomral_neat_older_adult_activity.gender.df <- rbind(fhf.uni_normal_neat_
                                                             Total,
                                                             f.outdata.normal_neat_older_adult_activity.col)
 
-write.csv(fhf.uni_nomral_neat_older_adult_activity.gender.df, "first_gragh.csv", row.names = FALSE)
-export(admin.people.df, "first_gragh.xlsx")
-
 ##### >= 60 gender 
 
 oversixty_normal_neat_older_adult_activity <- neat_older_adult_activity[neat_older_adult_activity$older_age >= 60,]
@@ -128,5 +126,8 @@ f.oversixty_normal_neat_older_adult_activity.df$性別 <- c("無", "女", "男")
 
 #### export files
 
-write.csv(f.oversixty_normal_neat_older_adult_activity.df, "gender_over60.csv", row.names = FALSE)
+#write.csv(fhf.uni_nomral_neat_older_adult_activity.gender.df, "first_gragh.csv", row.names = FALSE)
+export(admin.people.df, "first_gragh.xlsx")
+
+#write.csv(f.oversixty_normal_neat_older_adult_activity.df, "gender_over60.csv", row.names = FALSE)
 export(admin.people.df, "gender_over60.xlsx")
