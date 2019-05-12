@@ -1,18 +1,13 @@
-library(ggplot2)
-library(ggpubr)
 library(tidyr)
 library(plyr)
 library(dplyr)
 library(gtools)
-library(gridExtra)
-library(ggforce)
-library(ggpmisc)
 library(data.table)
 library(devtools)
-library(mni2aal)
 library(lubridate)
 library(rio)
 
+#### 日期計算函數 ####
 calc_age <- function(birthDate, refDate = Sys.Date()) {
   
   require(lubridate)
@@ -23,7 +18,9 @@ calc_age <- function(birthDate, refDate = Sys.Date()) {
   period$year
 }
 
-setwd("D:/Data/仕緯專案")
+#### 設定起始資料夾 ####
+
+setwd("D:/Data/SWC")
 
 older_adult_activity <- read.csv("2019 年 3 月長者簽到資料.csv")
 neat_older_adult_activity <- older_adult_activity[older_adult_activity$姓名 != "" & older_adult_activity$生日 != "",]
@@ -61,7 +58,7 @@ colnames(norepo.act.freq.table) <- c("子類型", "主類型", "人數")
 norepo.act.freq.table[1,1:2] <- c("一般簽到", "一般簽到")
 row.names(norepo.act.freq.table) <- 1:nrow(norepo.act.freq.table)
 
-#### merge and create csv file ####
+#### merge and export csv file ####
 
 act.freq.table <- cbind(act.freq.table, 人數 = norepo.act.freq.table$人數)
 

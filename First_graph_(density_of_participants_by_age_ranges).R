@@ -1,18 +1,13 @@
-library(ggplot2)
-library(ggpubr)
 library(tidyr)
 library(plyr)
 library(dplyr)
 library(gtools)
-library(gridExtra)
-library(ggforce)
-library(ggpmisc)
 library(data.table)
 library(devtools)
-library(mni2aal)
 library(lubridate)
 library(rio)
 
+#### 日期計算函數 ####
 calc_age <- function(birthDate, refDate = Sys.Date()) {
   
   require(lubridate)
@@ -23,7 +18,9 @@ calc_age <- function(birthDate, refDate = Sys.Date()) {
   period$year
 }
 
-setwd("D:/Data/仕緯專案")
+#### 設定起始資料夾 ####
+
+setwd("D:/Data/SWC")
 
 older_adult_activity <- read.csv("2019 年 3 月長者簽到資料.csv")
 neat_older_adult_activity <- older_adult_activity[older_adult_activity$姓名 != "" & older_adult_activity$生日 != "",]
@@ -128,6 +125,8 @@ f.oversixty_normal_neat_older_adult_activity.df <- as.data.frame(table(f.oversix
 
 colnames(f.oversixty_normal_neat_older_adult_activity.df) <- c("性別", "人數")
 f.oversixty_normal_neat_older_adult_activity.df$性別 <- c("無", "女", "男")
+
+#### export files
 
 write.csv(f.oversixty_normal_neat_older_adult_activity.df, "gender_over60.csv", row.names = FALSE)
 export(admin.people.df, "gender_over60.xlsx")

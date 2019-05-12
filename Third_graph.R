@@ -1,18 +1,13 @@
-library(ggplot2)
-library(ggpubr)
 library(tidyr)
 library(plyr)
 library(dplyr)
 library(gtools)
-library(gridExtra)
-library(ggforce)
-library(ggpmisc)
 library(data.table)
 library(devtools)
-library(mni2aal)
 library(lubridate)
 library(rio)
 
+#### 日期計算函數 ####
 calc_age <- function(birthDate, refDate = Sys.Date()) {
   
   require(lubridate)
@@ -23,11 +18,12 @@ calc_age <- function(birthDate, refDate = Sys.Date()) {
   period$year
 }
 
-setwd("D:/Data/仕緯專案")
+#### 設定起始資料夾 ####
+
+setwd("D:/Data/SWC")
 
 older_adult_activity <- read.csv("2019 年 3 月長者簽到資料.csv")
 neat_older_adult_activity <- older_adult_activity[older_adult_activity$姓名 != "" & older_adult_activity$生日 != "",]
-
 
 ##### Preprocessing ####
 
@@ -58,7 +54,7 @@ admin.normal_neat_older_adult_activity <- cbind(admin.normal_neat_older_adult_ac
 
 colnames(admin.normal_neat_older_adult_activity) <- c("行政區", "人次", "人數")
 
-#### Third graph (按照據點流水號)####
+#### Third graph (按照據點流水號) ####
 
 org_list <- read.csv("108年度據點列表.csv")
 
@@ -73,10 +69,12 @@ admin.normal_neat_older_adult_activity.by_id <- cbind(admin.normal_neat_older_ad
 
 colnames(admin.normal_neat_older_adult_activity.by_id)[1:2] <- c("據點流水號", "人次")
 
-write.csv(admin.normal_neat_older_adult_activity.by_id, "Third_graph_org.csv", row.names = FALSE)
-
 admin.normal_neat_older_adult_activity <- cbind(admin.normal_neat_older_adult_activity,
                                                 "據點數" = admin.map.f.uni_normal_neat_older_adult_activity.df$據點數)
+
+# export csv and and xlsx
+write.csv(admin.normal_neat_older_adult_activity.by_id, "Third_graph_org.csv", row.names = FALSE)
+export(admin.people.df, "Third_graph_org.xlsx")
 
 write.csv(admin.normal_neat_older_adult_activity, "Third_graph.csv", row.names = FALSE)
 export(admin.people.df, "Third_graph.xlsx")

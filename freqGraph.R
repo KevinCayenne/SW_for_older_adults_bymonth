@@ -1,19 +1,13 @@
-library(ggplot2)
-library(ggpubr)
 library(tidyr)
 library(plyr)
 library(dplyr)
 library(gtools)
-library(gridExtra)
-library(ggforce)
-library(ggpmisc)
 library(data.table)
 library(devtools)
-library(mni2aal)
 library(lubridate)
-library(stringr)
 library(rio)
 
+#### 日期計算函數 ####
 calc_age <- function(birthDate, refDate = Sys.Date()) {
   
   require(lubridate)
@@ -24,7 +18,8 @@ calc_age <- function(birthDate, refDate = Sys.Date()) {
   period$year
 }
 
-setwd("D:/Data/仕緯專案")
+#### 設定起始資料夾 ####
+setwd("D:/Data/SWC")
 
 older_adult_activity <- read.csv("2019 年 3 月長者簽到資料.csv")
 neat_older_adult_activity <- older_adult_activity[older_adult_activity$姓名 != "" & older_adult_activity$生日 != "",]
@@ -58,11 +53,7 @@ for(i in levels(uni.date.freq.f.uni_normal_neat_older_adult_activity$行政區)){
    uni.date.freq.f.uni_normal_neat_older_adult_activity.df <- as.data.frame(table(uni.date.freq.f.uni_normal_neat_older_adult_activity[uni.date.freq.f.uni_normal_neat_older_adult_activity$行政區 == i,]$長者流水號))
    
    uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist <- hist(uni.date.freq.f.uni_normal_neat_older_adult_activity.df$Freq/4, breaks = 6)
-   # 
-   # if (length(uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts) > 6){
-   #  new.counts <- c(uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts[1:5], uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts[6] + uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts[7])
-   # } 
-   # 
+
    temp.admin <- data.frame(一周平均刷卡天數 = 1:length(uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts),
                             人數 = uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts, 
                             行政區 = rep(i, length(uni.date.freq.f.uni_normal_neat_older_adult_activity.df.hist$counts)))
@@ -70,5 +61,7 @@ for(i in levels(uni.date.freq.f.uni_normal_neat_older_adult_activity$行政區)){
    admin.people.df <- rbind(admin.people.df, temp.admin)
 }
    
+#### export files
+
 export(admin.people.df, "freqGraph.xlsx")
   
