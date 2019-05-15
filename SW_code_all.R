@@ -23,6 +23,7 @@ calc_age <- function(birthDate, refDate = Sys.Date()) {
 setwd("D:/Data/SWC")
 
 older_adult_activity <- read.csv("2019 年 3 月長者簽到資料.csv") # 設定讀入檔案
+org_list <- read.csv("108年度據點列表.csv") # 設定讀入檔案
 
 neat_older_adult_activity <- older_adult_activity[older_adult_activity$姓名 != "" & older_adult_activity$生日 != "",]
 
@@ -64,8 +65,6 @@ f.outdata.normal_neat_older_adult_activity.col <- c("不在分析範圍的值",
                                                     nrow(f.outdata.normal_neat_older_adult_activity.F),
                                                     nrow(f.outdata.normal_neat_older_adult_activity.NA),
                                                     nrow(f.outdata.normal_neat_older_adult_activity.M) + nrow(f.outdata.normal_neat_older_adult_activity.F) + nrow(f.outdata.normal_neat_older_adult_activity.NA))
-
-####
 
 lengths = max(length(hf.uni_normal_neat_older_adult_activity.M$counts),
               length(hf.uni_normal_neat_older_adult_activity.F$counts),
@@ -181,8 +180,6 @@ colnames(admin.normal_neat_older_adult_activity) <- c("行政區", "人次", "人數")
 
 #### Third graph (按照據點流水號) ####
 
-org_list <- read.csv("108年度據點列表.csv")
-
 admin.normal_neat_older_adult_activity.by_id <- as.data.frame(table(normal_neat_older_adult_activity$據點流水號))
 
 uni.admin.normal_neat_older_adult_activity.by_id <- as.data.frame(table(map.f.uni_normal_neat_older_adult_activity$據點流水號))
@@ -204,6 +201,7 @@ export(admin.people.df, "Third_graph_org.xlsx")
 # write.csv(admin.normal_neat_older_adult_activity, "Third_graph.csv", row.names = FALSE)
 export(admin.people.df, "Third_graph.xlsx")
 
+#### freqency graph ####
 
 freq.f.uni_normal_neat_older_adult_activity <- normal_neat_older_adult_activity[,c(1,2,4,5,9,10,16)]
 
