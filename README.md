@@ -24,7 +24,7 @@ install.pakages("tidyr")
 
 ------
 
-- ### 執行 SW_code_all.R 腳本共會輸出6個.xlsx檔案:
+- ### 執行 SW_code_all.R 腳本共會輸出7個.xlsx檔案:
 	
 1. first_gragh.xlsx (年齡間距分布):
 	
@@ -55,3 +55,5 @@ install.pakages("tidyr")
 	
 
 ![](./img/freq.png)
+
+7. data_for_analysis.xlsx (清理後用於分析的資料)

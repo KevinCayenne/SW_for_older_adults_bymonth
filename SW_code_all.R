@@ -37,6 +37,9 @@ neat_older_adult_activity <- cbind(neat_older_adult_activity, older_age)
 
 normal_neat_older_adult_activity <- neat_older_adult_activity[neat_older_adult_activity$older_age >= 20,]
 
+# export normal data for analysis
+export(normal_neat_older_adult_activity, "data_for_analysis.xlsx")
+
 #### normal unique subjects ####
 
 f.uni_normal_neat_older_adult_activity <- unique(normal_neat_older_adult_activity[,c(1,4,5,16)])
@@ -126,11 +129,10 @@ f.oversixty_normal_neat_older_adult_activity.df$┦ <- c("礚", "", "╧")
 #### export files
 
 #write.csv(fhf.uni_nomral_neat_older_adult_activity.gender.df, "first_gragh.csv", row.names = FALSE)
-export(admin.people.df, "first_gragh.xlsx")
+export(fhf.uni_nomral_neat_older_adult_activity.gender.df, "first_gragh.xlsx")
 
 #write.csv(f.oversixty_normal_neat_older_adult_activity.df, "gender_over60.csv", row.names = FALSE)
-export(admin.people.df, "gender_over60.xlsx")
-
+export(f.oversixty_normal_neat_older_adult_activity.df, "gender_over60.xlsx")
 
 #### Second graph (Total number of participants which is repeatable) #### 
 
@@ -159,7 +161,7 @@ act.freq.table <- cbind(act.freq.table, 计 = norepo.act.freq.table$计)
 act.freq.table <- cbind(act.freq.table, キАㄏノΩ计 = act.freq.table$Ω/act.freq.table$计)
 
 # write.csv(act.freq.table, "second_graph.csv", row.names = FALSE)
-export(admin.people.df, "second_graph.xlsx")
+export(act.freq.table, "second_graph.xlsx")
 
 #### Third graph (酚︽現跋)####
 
@@ -196,10 +198,10 @@ admin.normal_neat_older_adult_activity <- cbind(admin.normal_neat_older_adult_ac
 
 # export csv and and xlsx
 # write.csv(admin.normal_neat_older_adult_activity.by_id, "Third_graph_org.csv", row.names = FALSE)
-export(admin.people.df, "Third_graph_org.xlsx")
+export(admin.normal_neat_older_adult_activity.by_id, "Third_graph_org.xlsx")
 
 # write.csv(admin.normal_neat_older_adult_activity, "Third_graph.csv", row.names = FALSE)
-export(admin.people.df, "Third_graph.xlsx")
+export(admin.normal_neat_older_adult_activity, "Third_graph.xlsx")
 
 #### freqency graph ####
 
