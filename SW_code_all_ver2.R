@@ -22,7 +22,7 @@ calc_age <- function(birthDate, refDate = Sys.Date()) {
 
 setwd("D:/Data/SWC")
 
-older_adult_activity <- read.csv("2019 年 3 月長者簽到資料.csv") # 設定讀入檔案
+older_adult_activity <- read.csv("2019 年 4 月長者簽到資料.csv") # 設定讀入檔案
 org_list <- read.csv("108年度據點列表.csv") # 設定讀入檔案
 
 neat_older_adult_activity <- older_adult_activity[older_adult_activity$姓名 != "" & older_adult_activity$生日 != "",]
@@ -35,7 +35,7 @@ older_age <- calc_age(older_birth, "2019-05-01")
 
 neat_older_adult_activity <- cbind(neat_older_adult_activity, older_age)
 
-normal_neat_older_adult_activity <- neat_older_adult_activity[neat_older_adult_activity$older_age >= 20,]
+normal_neat_older_adult_activity <- neat_older_adult_activity[neat_older_adult_activity$older_age >= 20 & neat_older_adult_activity$older_age <= 120,]
 
 # export normal data for analysis
 export(normal_neat_older_adult_activity, "data_for_analysis.xlsx")
@@ -91,6 +91,7 @@ hf.uni_normal_neat_older_adult_activity.gender[is.na(hf.uni_normal_neat_older_ad
 
 hf.uni_normal_neat_older_adult_activity.gender.df <- as.data.frame(hf.uni_normal_neat_older_adult_activity.gender, stringsAsFactors=FALSE)
 hf.uni_normal_neat_older_adult_activity.gender.df <- hf.uni_normal_neat_older_adult_activity.gender.df[-c(21),]
+
 hf.uni_normal_neat_older_adult_activity.gender.df <- cbind(年齡間距, hf.uni_normal_neat_older_adult_activity.gender.df)
 hf.uni_normal_neat_older_adult_activity.gender.df <- hf.uni_normal_neat_older_adult_activity.gender.df[,-c(2)]
 
@@ -187,15 +188,12 @@ admin.normal_neat_older_adult_activity.by_id <- as.data.frame(table(normal_neat_
 uni.admin.normal_neat_older_adult_activity.by_id <- as.data.frame(table(map.f.uni_normal_neat_older_adult_activity$據點流水號))
 
 admin.normal_neat_older_adult_activity.by_id <- cbind(admin.normal_neat_older_adult_activity.by_id,
-                                                      人數 = uni.admin.normal_neat_older_adult_activity.by_id$Freq,
-                                                      平均使用次數 = admin.normal_neat_older_adult_activity.by_id$Freq/uni.admin.normal_neat_older_adult_activity.by_id$Freq,
-                                                      據點名稱 = org_list[org_list$據點流水號 %in% admin.normal_neat_older_adult_activity.by_id$Var1,]$據點名稱)
+                                                      人數 = uni.admin.normal_neat_older_adult_activity.by_id$Freq,                                                      據點名稱 = org_list[org_list$據點流水號 %in% admin.normal_neat_older_adult_activity.by_id$Var1,]$據點名稱)
 
 colnames(admin.normal_neat_older_adult_activity.by_id)[1:2] <- c("據點流水號", "人次")
 
 admin.normal_neat_older_adult_activity <- cbind(admin.normal_neat_older_adult_activity,
-                                                "據點數" = admin.map.f.uni_normal_neat_older_adult_activity.df$據點數)
-
+                                              "據點數" = admin.map.f.uni_normal_neat_older_adult_activity.df$據點數)
 # export csv and and xlsx
 # write.csv(admin.normal_neat_older_adult_activity.by_id, "Third_graph_org.csv", row.names = FALSE)
 export(admin.normal_neat_older_adult_activity.by_id, "Third_graph_org.xlsx")
@@ -208,7 +206,7 @@ export(admin.normal_neat_older_adult_activity, "Third_graph.xlsx")
 freq.f.uni_normal_neat_older_adult_activity <- normal_neat_older_adult_activity[,c(1,2,4,5,9,10,16)]
 
 date.freq.f.uni_normal_neat_older_adult_activity <- separate(freq.f.uni_normal_neat_older_adult_activity, "簽到時間", into = c("日期", "時間"), sep = " ")
-date.freq.f.uni_normal_neat_older_adult_activity <- separate(date.freq.f.uni_normal_neat_older_adult_activity, "日期", into = c("年", "月", "日"), sep = "/")
+date.freq.f.uni_normal_neat_older_adult_activity <- separate(date.freq.f.uni_normal_neat_older_adult_activity, "日期", into = c("年", "月", "日"), sep = "-")
 
 uni.date.freq.f.uni_normal_neat_older_adult_activity <- unique(date.freq.f.uni_normal_neat_older_adult_activity[,c(1,4,6,7,8,9)])
 
