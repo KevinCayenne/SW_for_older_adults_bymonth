@@ -22,7 +22,7 @@ calc_age <- function(birthDate, refDate = Sys.Date()) {
 
 setwd("D:/Data/SWC")
 
-older_adult_activity <- read.csv("2019 年 3 月長者簽到資料.csv") # 設定讀入檔案
+older_adult_activity <- read.csv("2019 年 4 月長者簽到資料.csv") # 設定讀入檔案
 org_list <- read.csv("108年度據點列表.csv") # 設定讀入檔案
 
 neat_older_adult_activity <- older_adult_activity[older_adult_activity$姓名 != "" & older_adult_activity$生日 != "",]
@@ -91,6 +91,8 @@ hf.uni_normal_neat_older_adult_activity.gender[is.na(hf.uni_normal_neat_older_ad
 
 hf.uni_normal_neat_older_adult_activity.gender.df <- as.data.frame(hf.uni_normal_neat_older_adult_activity.gender, stringsAsFactors=FALSE)
 hf.uni_normal_neat_older_adult_activity.gender.df <- hf.uni_normal_neat_older_adult_activity.gender.df[-c(21),]
+
+年齡間距 <- 年齡間距[1:nrow(hf.uni_normal_neat_older_adult_activity.gender.df)]
 
 hf.uni_normal_neat_older_adult_activity.gender.df <- cbind(年齡間距, hf.uni_normal_neat_older_adult_activity.gender.df)
 hf.uni_normal_neat_older_adult_activity.gender.df <- hf.uni_normal_neat_older_adult_activity.gender.df[,-c(2)]
