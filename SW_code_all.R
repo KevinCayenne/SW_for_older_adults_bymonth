@@ -24,6 +24,7 @@ setwd("D:/Data/SWC")
 
 older_adult_activity <- read.csv("2019 年 4 月長者簽到資料.csv") # 設定讀入檔案
 org_list <- read.csv("108年度據點列表.csv") # 設定讀入檔案
+sep.icon <- "-" #設定日期分隔
 
 neat_older_adult_activity <- older_adult_activity[older_adult_activity$姓名 != "" & older_adult_activity$生日 != "",]
 
@@ -142,7 +143,7 @@ export(f.oversixty_normal_neat_older_adult_activity.df, "gender_over60.xlsx")
 # View(normal_neat_older_adult_activity)
 
 date.freq.f.uni_normal_neat_older_adult_activity <- separate(normal_neat_older_adult_activity, "簽到時間", into = c("日期", "時間"), sep = " ")
-date.freq.f.uni_normal_neat_older_adult_activity <- separate(date.freq.f.uni_normal_neat_older_adult_activity, "日期", into = c("年", "月", "日"), sep = "/")
+date.freq.f.uni_normal_neat_older_adult_activity <- separate(date.freq.f.uni_normal_neat_older_adult_activity, "日期", into = c("年", "月", "日"), sep = sep.icon)
 
 nor.date.freq.f.uni_normal_neat_older_adult_activity <- unique(date.freq.f.uni_normal_neat_older_adult_activity[,c(1,4,7,8,12,13,14,16,17)])
 
@@ -217,7 +218,7 @@ export(admin.normal_neat_older_adult_activity, "Third_graph.xlsx")
 freq.f.uni_normal_neat_older_adult_activity <- normal_neat_older_adult_activity[,c(1,2,4,5,9,10,16)]
 
 date.freq.f.uni_normal_neat_older_adult_activity <- separate(freq.f.uni_normal_neat_older_adult_activity, "簽到時間", into = c("日期", "時間"), sep = " ")
-date.freq.f.uni_normal_neat_older_adult_activity <- separate(date.freq.f.uni_normal_neat_older_adult_activity, "日期", into = c("年", "月", "日"), sep = "/")
+date.freq.f.uni_normal_neat_older_adult_activity <- separate(date.freq.f.uni_normal_neat_older_adult_activity, "日期", into = c("年", "月", "日"), sep = sep.icon)
 
 uni.date.freq.f.uni_normal_neat_older_adult_activity <- unique(date.freq.f.uni_normal_neat_older_adult_activity[,c(1,4,6,7,8,9)])
 
