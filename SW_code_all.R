@@ -38,8 +38,12 @@ neat_older_adult_activity <- cbind(neat_older_adult_activity, older_age)
 
 normal_neat_older_adult_activity <- neat_older_adult_activity[neat_older_adult_activity$older_age >= 20 & neat_older_adult_activity$older_age <= 120,]
 
+date.freq.f.uni_normal_neat_older_adult_activity <- separate(normal_neat_older_adult_activity, "簽到時間", into = c("日期", "時間"), sep = " ")
+date.freq.f.uni_normal_neat_older_adult_activity <- separate(date.freq.f.uni_normal_neat_older_adult_activity, "日期", into = c("年", "月", "日"), sep = sep.icon)
+del_normal_neat_older_adult_activity <- unique(date.freq.f.uni_normal_neat_older_adult_activity[,c(1,2,3,4,6,7:19)])
+
 # export normal data for analysis
-export(normal_neat_older_adult_activity, "data_for_analysis.xlsx")
+export(del_normal_neat_older_adult_activity, "data_for_analysis.xlsx")
 
 #### normal unique subjects ####
 
