@@ -56,4 +56,4 @@ install.pakages("tidyr")
 
 ![](./img/freq.png)
 
-7. data_for_analysis.xlsx (清理後用於分析的資料)
+7. data_for_analysis.xlsx (此為清理後用於分析的資料)
